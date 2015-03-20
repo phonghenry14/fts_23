@@ -181,3 +181,15 @@ input {
     color: $state-danger-text;
   }
 }
+
+.option-fields input {
+  width: 200px;
+}
+
+.option-fields p {
+  margin-left: 50px;
+}
+
+.option-fields input[type = checkbox] {
+  width: 60px;
+}
