@@ -1,13 +1,39 @@
-<div class="center jumbotron">
-  <h1>Welcome to the Framgia Test</h1>
+<% if user_signed_in? %>
+  <h1>All examinations</h1>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <%= form_for @examination do |f| %>
+        <%= f.label :course_id, "Course" %>
+        <%= f.collection_select :course_id, Course.all, :id, :name %>
+        <%= f.hidden_field :user_id, value: current_user.id%>
+        <%= f.submit "Start New", class: "btn btn-primary" %>
+      <% end %>
 
-  <h2>
-    This is the home page for the test application.
-  </h2>
+    </div>
+  </div>
+  <div class="center jumbotron">
+    <ul class="users">
+      <% @examinations.each do |exam| %>
+        <li style="line-height: 20px;">
+          <span style="display: inline-block; width: 30%;">
+            <%= exam.course.name %></span>
+          <span style="display: inline-block; width: 30%;">
+            <%= exam.created_at %></span>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% else %>
+  <div class="center jumbotron">
+    <h1>Welcome to the Framgia Test</h1>
+    <h2>
+      This is the home page for the test application.
+    </h2>
+    <%= link_to "Sign up now!", new_user_registration_path, class: "btn btn-large btn-primary" %>
+  </div>
 
-  <%= link_to "Sign up now!", new_user_registration_path, class: "btn btn-large btn-primary" %>
-</div>
-
-<%= link_to 'http://rubyonrails.org/' do %>
-  <%= image_tag "rails.png", alt: "Rails logo" %>
+  <%= link_to 'http://rubyonrails.org/' do %>
+    <%= image_tag "rails.png", alt: "Rails logo" %>
+  <% end %>
 <% end %>
+

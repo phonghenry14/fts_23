@@ -1,5 +1,7 @@
 class StaticPagesController < ApplicationController
   def home
+    @examination = Examination.new
+    @examinations = current_user.examinations
   end
 
   def help
