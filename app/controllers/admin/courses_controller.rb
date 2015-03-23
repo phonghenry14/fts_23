@@ -5,6 +5,10 @@ class Admin::CoursesController < ApplicationController
     4.times { question.options.build }
   end
 
+  def show
+    @course = Course.find params[:id]
+  end
+
   def create
     @course = Course.new course_params
     if @course.save

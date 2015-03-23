@@ -1,0 +1,19 @@
+<ul style="text-align: center; font-size: 24px"y >
+  <strong>Name:</strong>
+  <%= h @course.name %>
+</ul>
+<ol>
+  <% @course.questions.each do |question| %>
+    <li><%= h question.content %></li>
+    <% question.options.each do |option| %>
+      <ul class = "option-fields">
+        <% if option.correct? %>
+          <li><%= h option.content %>
+          <span class= "glyphicon glyphicon-ok" ></span></li>
+        <% else %>
+          <li><%= h option.content %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
+</ol>
