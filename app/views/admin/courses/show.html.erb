@@ -1,7 +1,11 @@
+<%= link_to "Back",admin_courses_path, class: "glyphicon glyphicon-step-backward" %>
 <ul style="text-align: center; font-size: 24px"y >
   <strong>Name:</strong>
   <%= h @course.name %>
 </ul>
+<%= link_to " Edit", edit_admin_course_path, class: "glyphicon glyphicon-edit" %></br>
+<%= link_to " Delete", admin_course_path(@course),
+    method: :delete, data: {confirm: "You sure?"}, class: "glyphicon glyphicon-trash" %>
 <ol>
   <% @course.questions.each do |question| %>
     <li><%= h question.content %></li>

@@ -20,8 +20,8 @@ function add_fields(link, association, content) {
   $(link).parent().before(content.replace(regexp, new_id));
 }
 
-function check_only_one_checkbox() {
-  $('input[type="checkbox"]').bind('click',function() {
-    $('input[type="checkbox"]').not(this).prop("checked", false);
-  });
+function check_only_one_checkbox(checkbox) {
+  $(checkbox).closest(".options").find("input[type='checkbox']")
+    .not(this).prop("checked", false);
+  $(checkbox).prop("checked", true)
 }
