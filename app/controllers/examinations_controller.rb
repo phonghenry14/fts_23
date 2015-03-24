@@ -1,4 +1,9 @@
 class ExaminationsController < ApplicationController
+  def index
+    @examination = Examination.new
+    @examinations = current_user.examinations
+  end
+
   def new
   end
 

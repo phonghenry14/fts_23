@@ -1,0 +1,37 @@
+<% if user_signed_in? %>
+  <h1>All examinations</h1>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <%= form_for @examination do |f| %>
+        <%= f.label :course_id, "Course" %>
+        <%= f.collection_select :course_id, Course.all, :id, :name %>
+        <%= f.hidden_field :user_id, value: current_user.id%>
+        <%= f.submit "Start New", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+  <br \>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width: 200px">Name</th>
+          <th style="width: 300px">Created at</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @examinations.each do |exam| %>
+          <tr>
+            <td><%= exam.course.name %></td>
+            <td><%= exam.course.created_at %></td>
+            <td>Testing</td>
+            <td><%= link_to "Start", "#" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
