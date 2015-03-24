@@ -17,7 +17,7 @@ class Admin::CoursesController < ApplicationController
   def create
     @course = Course.new course_params
     if @course.save
-      flash[:success] = "Successfully created survey!"
+      flash[:success] = "Successfully created course!"
       redirect_to admin_course_path @course
     else
       flash[:notice] = "Found Error!"
@@ -32,10 +32,10 @@ class Admin::CoursesController < ApplicationController
   def update
     @course = Course.find params[:id]
     if @course.update_attributes course_params
-      flash[:success] = "Done!"
+      flash[:success] = "Successfully updated course!"
       redirect_to admin_course_path @course
     else
-      flash[:danger] = "Fail!"
+      flash[:danger] = "Found Error!"
       render :edit
     end
   end

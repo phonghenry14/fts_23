@@ -1,7 +1,6 @@
 class StaticPagesController < ApplicationController
   def home
-    @examination = Examination.new
-    @examinations = current_user.examinations
+    redirect_to examinations_path if user_signed_in?
   end
 
   def help

@@ -1,13 +1,19 @@
 <% provide(:title, 'All Courses') %>
 <h1>All courses</h1>
 <%= will_paginate %>
-  <ul>
-    <% @courses.each do |course| %>
-      <li>
-        <%= link_to course.name, admin_course_path(course) %>
-        <%= link_to "", admin_course_path(course),
-    method: :delete, data: {confirm: "You sure?"}, class: "glyphicon glyphicon-trash" %>
-      </li>
-    <% end %>
-  </ul>
+<%= link_to "Add", new_admin_course_path, class: "glyphicon glyphicon-plus" %>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Created at</th>
+        <th>Modified</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @courses %>
+    </tbody>
+  </table>
+</div>
 <%= will_paginate %>

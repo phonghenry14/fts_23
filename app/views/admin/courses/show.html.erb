@@ -1,23 +1,29 @@
-<%= link_to "Back",admin_courses_path, class: "glyphicon glyphicon-step-backward" %>
-<ul style="text-align: center; font-size: 24px"y >
-  <strong>Name:</strong>
-  <%= h @course.name %>
-</ul>
-<%= link_to " Edit", edit_admin_course_path, class: "glyphicon glyphicon-edit" %></br>
-<%= link_to " Delete", admin_course_path(@course),
-    method: :delete, data: {confirm: "You sure?"}, class: "glyphicon glyphicon-trash" %>
-<ol>
-  <% @course.questions.each do |question| %>
-    <li><%= h question.content %></li>
-    <% question.options.each do |option| %>
-      <ul class = "option-fields">
-        <% if option.correct? %>
-          <li><%= h option.content %>
-          <span class= "glyphicon glyphicon-ok" ></span></li>
-        <% else %>
-          <li><%= h option.content %></li>
+<%= link_to "Back", admin_courses_path, class: "glyphicon glyphicon-step-backward" %>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <ul style="text-align: center; font-size: 24px"y >
+      <strong>Name:</strong>
+      <%= h @course.name %>
+    </ul>
+    <div style="text-align: center; margin-left: 40px">
+      <%= link_to " ", edit_admin_course_path, class: "glyphicon glyphicon-edit" %> 
+      <%= link_to " ", admin_course_path(@course),
+          method: :delete, data: {confirm: "You sure?"}, class: "glyphicon glyphicon-trash" %>
+    </div>
+    <ol>
+      <% @course.questions.each do |question| %>
+        <li><%= h question.content %></li>
+        <% question.options.each do |option| %>
+          <ul class = "option-fields">
+            <% if option.correct? %>
+              <li><%= h option.content %>
+              <span class= "glyphicon glyphicon-ok" ></span></li>
+            <% else %>
+              <li><%= h option.content %></li>
+            <% end %>
+          </ul>
         <% end %>
-      </ul>
-    <% end %>
-  <% end %>
-</ol>
+      <% end %>
+    </ol>
+  </div>
+</div>
