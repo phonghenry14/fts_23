@@ -1,7 +1,0 @@
-<td><%= gravatar_for user, size: 30 %></td>
-<td><%= link_to user.name, admin_user_path(user) %></td></br>
-<% unless user.is_admin? %>
-  <td><%= link_to "", admin_user_path(user),
-    method: :delete, data: {confirm: "You sure?"}, class: "glyphicon glyphicon-trash" %></td>
-<% end %>
-</br>
