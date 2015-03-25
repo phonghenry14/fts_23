@@ -26,8 +26,13 @@
           <tr>
             <td><%= exam.course.name %></td>
             <td><%= exam.course.created_at %></td>
-            <td>Testing</td>
-            <td><%= link_to "Start", examination_path(exam) %>
+            <td><%= exam.status %></td>
+            <td>
+              <% if exam.status == "Summited" %>
+                <%= link_to "View", examination_path(exam) %>
+              <% else %>
+                <%= link_to "Start", examination_path(exam) %>
+              <% end %>
             </td>
           </tr>
         <% end %>

@@ -11,16 +11,33 @@ class ExaminationsController < ApplicationController
       redirect_to root_path
     else
       flash[:notice] = "Found Error!"
-      render :new
+      redirect_to root_path
     end
   end
 
   def show
     @examination = Examination.find params[:id]
+    @answers = @examination.answers
+  end
+
+  def update
+    @examination = Examination.find params[:id]
+    if @examination.update_attributes examination_params_to_answer
+      flash[:success] = "Successfully summited!"
+      redirect_to root_path
+    else
+      flash[:danger] = "Found Error!"
+      render :show
+    end
   end
 
   private
   def examination_params
     params.require(:examination).permit :id, :user_id, :course_id
+  end
+
+  def examination_params_to_answer
+    params.require(:examination).permit :id,
+                    answers_attributes: [:id, :question_id, :option_id]
   end
 end
