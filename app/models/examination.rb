@@ -1,7 +1,15 @@
 class Examination < ActiveRecord::Base
-  belongs_to :user, class_name: 'User', foreign_key: :user_id
-  belongs_to :course, class_name: 'Course', foreign_key: :course_id
+  belongs_to :user
+  belongs_to :course
   has_many :answers, dependent: :destroy
 
   accepts_nested_attributes_for :answers, allow_destroy: true
+
+  before_create :init_answers
+
+  def init_answers
+    self.course.questions.sample(20).each do |question|
+      self.answers.build question: question
+    end
+  end
 end

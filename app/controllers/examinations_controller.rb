@@ -4,9 +4,6 @@ class ExaminationsController < ApplicationController
     @examinations = current_user.examinations
   end
 
-  def new
-  end
-
   def create
     @examination = Examination.new examination_params
     if @examination.save
@@ -16,6 +13,10 @@ class ExaminationsController < ApplicationController
       flash[:notice] = "Found Error!"
       render :new
     end
+  end
+
+  def show
+    @examination = Examination.find params[:id]
   end
 
   private

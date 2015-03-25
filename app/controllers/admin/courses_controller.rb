@@ -7,7 +7,7 @@ class Admin::CoursesController < ApplicationController
   def new
     @course = Course.new
     question = @course.questions.build
-    4.times { question.options.build }
+    4.times {question.options.build}
   end
 
   def show

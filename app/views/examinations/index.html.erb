@@ -15,8 +15,8 @@
     <table class="table">
       <thead>
         <tr>
-          <th style="width: 200px">Name</th>
-          <th style="width: 300px">Created at</th>
+          <th style="width: 300px">Name</th>
+          <th style="width: 400px">Created at</th>
           <th>Status</th>
           <th></th>
         </tr>
@@ -27,7 +27,7 @@
             <td><%= exam.course.name %></td>
             <td><%= exam.course.created_at %></td>
             <td>Testing</td>
-            <td><%= link_to "Start", "#" %>
+            <td><%= link_to "Start", examination_path(exam) %>
             </td>
           </tr>
         <% end %>

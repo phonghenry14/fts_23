@@ -9,9 +9,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :examinations
-  resources :courses do
-    resources :examinations
-  end
+  resources :courses
 
   namespace :admin do
     root "static_pages#home"
