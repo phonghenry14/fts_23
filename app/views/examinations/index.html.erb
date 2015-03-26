@@ -5,7 +5,7 @@
       <%= f.label :course_id, "Course" %>
       <%= f.collection_select :course_id, Course.all, :id, :name %>
       <%= f.hidden_field :user_id, value: current_user.id%>
-      <%= f.hidden_field :status, value: "Testing" %>
+      <%= f.hidden_field :status, value: "Ready" %>
       <%= f.submit "Start New", class: "btn btn-primary" %>
     <% end %>
   </div>
@@ -15,8 +15,8 @@
   <table class="table">
     <thead>
       <tr>
-        <th style="width: 300px">Name</th>
-        <th style="width: 400px">Created at</th>
+        <th style="width: 150px">Name</th>
+        <th style="width: 200px">Created at</th>
         <th>Status</th>
         <th></th>
       </tr>
@@ -36,7 +36,9 @@
             <% if exam.status == "Submited" || exam.status == "Checked" %>
               <%= link_to "View", examination_path(exam) %>
             <% else %>
-              <%= link_to "Start", examination_path(exam) %>
+              <div id= "getting" data-time="<%= Time.zone.now() + exam.course.time_countdown %>" data-timer-exam="<%= exam.id %>">
+                <%= link_to "Start", examination_path(exam), class: "start" %>
+              </div>
             <% end %>
           </td>
         </tr>
@@ -44,3 +46,13 @@
     </tbody>
   </table>
 </div>
+
+
+<script type="text/javascript">
+
+  $(window).ready(function() {
+    if (localStorage.length != 0)
+      $('.start').remove();
+  });
+
+</script>

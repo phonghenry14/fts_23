@@ -1,43 +1,45 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="container">
-    <%= link_to "sample app", root_path, id: "logo" %>
-    <nav>
-      <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Home", root_path %></li>
-        <li><%= link_to "Help", help_path %></li>
-        <% if user_signed_in? %>
-          <% if current_user.is_admin? %>
-            <li><%= link_to 'Users', admin_users_path, class: 'navbar-link' %></li>
-            <li><%= link_to 'Courses', admin_courses_path, class: 'navbar-link' %></li>
-            <li class="dropdown" >
-              <a href="#"  class="dropdown-toggle" data-toggle="dropdown" >
-                <%= current_user.name %> <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu" >
-                <li><%= link_to ' Profile', current_user, class: 'glyphicon glyphicon-info-sign' %></li>
-                <li><%= link_to ' Edit profile', edit_user_registration_path, class: 'glyphicon glyphicon-edit' %></li>
-                <li class="divider" ></li>
-                <li><%= link_to " Logout", destroy_user_session_path, method: :delete, class: 'glyphicon glyphicon-off' %></li>
-              </ul>
-            </li>
+<header class="header">
+  <div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container">
+      <%= link_to "sample app", root_path, id: "logo" %>
+      <nav>
+        <ul class="nav navbar-nav navbar-right">
+          <li><%= link_to "Home", root_path %></li>
+          <li><%= link_to "Help", help_path %></li>
+          <% if user_signed_in? %>
+            <% if current_user.is_admin? %>
+              <li><%= link_to 'Users', admin_users_path, class: 'navbar-link' %></li>
+              <li><%= link_to 'Courses', admin_courses_path, class: 'navbar-link' %></li>
+              <li class="dropdown" >
+                <a href="#"  class="dropdown-toggle" data-toggle="dropdown" >
+                  <%= current_user.name %> <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu" >
+                  <li><%= link_to ' Profile', current_user, class: 'glyphicon glyphicon-info-sign' %></li>
+                  <li><%= link_to ' Edit profile', edit_user_registration_path, class: 'glyphicon glyphicon-edit' %></li>
+                  <li class="divider" ></li>
+                  <li><%= link_to " Logout", destroy_user_session_path, method: :delete, class: 'glyphicon glyphicon-off' %></li>
+                </ul>
+              </li>
+            <% else %>
+              <li class="dropdown" >
+                <a href="#"  class="dropdown-toggle" data-toggle="dropdown" >
+                  <%= current_user.name %> <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu" >
+                  <li><%= link_to ' Profile', current_user, class: 'glyphicon glyphicon-info-sign' %></li>
+                  <li><%= link_to ' Edit profile', edit_user_registration_path, class: 'glyphicon glyphicon-edit' %></li>
+                  <li class="divider" ></li>
+                  <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'glyphicon glyphicon-off' %></li>
+                </ul>
+              </li>
+            <% end %>
           <% else %>
-            <li class="dropdown" >
-              <a href="#"  class="dropdown-toggle" data-toggle="dropdown" >
-                <%= current_user.name %> <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu" >
-                <li><%= link_to ' Profile', current_user, class: 'glyphicon glyphicon-info-sign' %></li>
-                <li><%= link_to ' Edit profile', edit_user_registration_path, class: 'glyphicon glyphicon-edit' %></li>
-                <li class="divider" ></li>
-                <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'glyphicon glyphicon-off' %></li>
-              </ul>
-            </li>
+            <li><%= link_to "Sign up", new_user_registration_path, class: 'navbar-link'  %></li>
+            <li><%= link_to "Login", new_user_session_path, class: 'navbar-link'  %></li>
           <% end %>
-        <% else %>
-          <li><%= link_to "Sign up", new_user_registration_path, class: 'navbar-link'  %></li>
-          <li><%= link_to "Login", new_user_session_path, class: 'navbar-link'  %></li>
-        <% end %>
-      </ul>
-    </nav>
+        </ul>
+      </nav>
+    </div>
   </div>
 </header>

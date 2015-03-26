@@ -1,9 +1,11 @@
 User.create email: "phong@abc.com", name: "phong", role: "admin", password: "12345678"
 User.create email: "phuong@abc.com", name: "phuong", role: "admin", password: "12345678"
 
-Course.create name: "Ruby", created_at: Time.zone.now
-Course.create name: "Java", created_at: Time.zone.now
-Course.create name: "PHP", created_at: Time.zone.now
+time_countdown = 600
+
+Course.create name: "Ruby", created_at: Time.zone.now, time_countdown: time_countdown
+Course.create name: "Java", created_at: Time.zone.now, time_countdown: time_countdown
+Course.create name: "PHP", created_at: Time.zone.now, time_countdown: time_countdown
 
 coures = Course.all
 coures.each do |course|

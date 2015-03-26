@@ -11,6 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20150327085343) do
 
   create_table "answers", force: :cascade do |t|
@@ -23,9 +24,10 @@ ActiveRecord::Schema.define(version: 20150327085343) do
   end
 
   create_table "courses", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name",           limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "time_countdown", limit: 4
   end
 
   create_table "examinations", force: :cascade do |t|
