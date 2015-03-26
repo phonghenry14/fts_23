@@ -1,42 +1,46 @@
-<% if user_signed_in? %>
-  <h1>All examinations</h1>
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <%= form_for @examination do |f| %>
-        <%= f.label :course_id, "Course" %>
-        <%= f.collection_select :course_id, Course.all, :id, :name %>
-        <%= f.hidden_field :user_id, value: current_user.id%>
-        <%= f.submit "Start New", class: "btn btn-primary" %>
-      <% end %>
-    </div>
+<h1>All examinations</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for @examination do |f| %>
+      <%= f.label :course_id, "Course" %>
+      <%= f.collection_select :course_id, Course.all, :id, :name %>
+      <%= f.hidden_field :user_id, value: current_user.id%>
+      <%= f.hidden_field :status, value: "Testing" %>
+      <%= f.submit "Start New", class: "btn btn-primary" %>
+    <% end %>
   </div>
-  <br \>
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
+</div>
+<br \>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th style="width: 300px">Name</th>
+        <th style="width: 400px">Created at</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @examinations.each do |exam| %>
         <tr>
-          <th style="width: 300px">Name</th>
-          <th style="width: 400px">Created at</th>
-          <th>Status</th>
-          <th></th>
+          <td><%= exam.course.name %></td>
+          <td><%= exam.course.created_at %></td>
+          <td>
+            <%= exam.status %>&nbsp&nbsp&nbsp
+            <% if exam.status == "Checked" %>
+              <%= exam.correct_answers %>/20
+            <% end %>
+          </td>
+          <td>
+            <% if exam.status == "Submited" || exam.status == "Checked" %>
+              <%= link_to "View", examination_path(exam) %>
+            <% else %>
+              <%= link_to "Start", examination_path(exam) %>
+            <% end %>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-        <% @examinations.each do |exam| %>
-          <tr>
-            <td><%= exam.course.name %></td>
-            <td><%= exam.course.created_at %></td>
-            <td><%= exam.status %></td>
-            <td>
-              <% if exam.status == "Summited" %>
-                <%= link_to "View", examination_path(exam) %>
-              <% else %>
-                <%= link_to "Start", examination_path(exam) %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-<% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

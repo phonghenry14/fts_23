@@ -17,7 +17,6 @@ class ExaminationsController < ApplicationController
 
   def show
     @examination = Examination.find params[:id]
-    @answers = @examination.answers
   end
 
   def update
@@ -33,11 +32,11 @@ class ExaminationsController < ApplicationController
 
   private
   def examination_params
-    params.require(:examination).permit :id, :user_id, :course_id
+    params.require(:examination).permit :id, :user_id, :course_id, :status
   end
 
   def examination_params_to_answer
-    params.require(:examination).permit :id,
+    params.require(:examination).permit :id, :status,
                     answers_attributes: [:id, :question_id, :option_id]
   end
 end
