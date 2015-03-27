@@ -3,6 +3,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th></th>
         <th style="width: 150px">Name</th>
         <th style="width: 250px">User name</th>
         <th style="width: 300px">Datetime</th>
@@ -13,6 +14,11 @@
     <tbody>
       <% @examinations.each do |exam| %>
         <tr>
+          <td>
+            <%= link_to "", admin_examination_path(exam),
+                      method: :delete, data: {confirm: "Are you sure?"},
+                      class: "glyphicon glyphicon-trash" %>
+           </td>
           <td><%= exam.course.name %></td>
           <td><%= exam.user.name %></td>
           <td><%= exam.course.created_at %></td>

@@ -18,6 +18,12 @@ class Admin::ExaminationsController < ApplicationController
     redirect_to root_path
   end
 
+  def destroy
+    Examination.find(params[:id]).destroy
+    flash[:success] = "Successfully examination deleted!"
+    redirect_to admin_examinations_path
+  end
+
   private
   def examination_params_to_check
     params.require(:examination).permit :id, :status,
