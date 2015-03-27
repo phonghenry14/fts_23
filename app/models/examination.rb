@@ -10,7 +10,7 @@ class Examination < ActiveRecord::Base
   def self.check_correct_answers(examination_params_to_check, questions, id)
     correct_answers = 0
     answers_attributes = examination_params_to_check[:answers_attributes]
-
+    answers_is_correct = []
     answers_attributes.each do |key, value|
       questions.each do |question|
         if(value[:question_id] == question.id.to_s)
@@ -19,6 +19,7 @@ class Examination < ActiveRecord::Base
               flag = option.id.to_s
               if(value[:option_id] == flag)
                 correct_answers = correct_answers + 1
+                answers_is_correct << value[:id].to_i
               end
             end
           end
@@ -27,6 +28,7 @@ class Examination < ActiveRecord::Base
     end
     Examination.update(id, correct_answers: correct_answers,
                           status: examination_params_to_check[:status])
+    return answers_is_correct
   end
 
   private
