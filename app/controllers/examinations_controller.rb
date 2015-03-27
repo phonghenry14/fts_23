@@ -1,4 +1,6 @@
 class ExaminationsController < ApplicationController
+  before_action :not_admin
+
   def index
     @examination = Examination.new
     @examinations = current_user.examinations
