@@ -12,8 +12,11 @@ class Admin::ExaminationsController < ApplicationController
   def update
     @examination = Examination.find params[:id]
     questions = @examination.course.questions
-    Examination.check_correct_answers(examination_params_to_check,
+    answers_is_correct = Examination.check_correct_answers(examination_params_to_check,
                                       questions, params[:id])
+    answers_is_correct.each do |n|
+      Answer.update(n, correct: true)
+    end
     flash[:success] = "Successfully checked!"
     redirect_to root_path
   end
