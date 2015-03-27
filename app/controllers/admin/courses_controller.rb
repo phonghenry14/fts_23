@@ -1,4 +1,5 @@
 class Admin::CoursesController < ApplicationController
+  before_action :admin_user
 
   def index
     @courses = Course.paginate page: params[:page]

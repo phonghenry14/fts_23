@@ -5,22 +5,34 @@ class Examination < ActiveRecord::Base
 
   accepts_nested_attributes_for :answers, allow_destroy: true
 
-  before_save :default_status
   before_create :init_answers
-  before_update :change_status
+
+  def self.check_correct_answers(examination_params_to_check, questions, id)
+    correct_answers = 0
+    answers_attributes = examination_params_to_check[:answers_attributes]
+
+    answers_attributes.each do |key, value|
+      questions.each do |question|
+        if(value[:question_id] == question.id.to_s)
+          question.options.each do |option|
+            if option.correct == true
+              flag = option.id.to_s
+              if(value[:option_id] == flag)
+                correct_answers = correct_answers + 1
+              end
+            end
+          end
+        end
+      end
+    end
+    Examination.update(id, correct_answers: correct_answers,
+                          status: examination_params_to_check[:status])
+  end
 
   private
   def init_answers
     self.course.questions.sample(20).each do |question|
       self.answers.build question: question
     end
-  end
-
-  def default_status
-    self.status = "Testing"
-  end
-
-  def change_status
-    self.status = "Summited"
   end
 end
