@@ -3,7 +3,7 @@ class ExaminationsController < ApplicationController
 
   def index
     @examination = Examination.new
-    @examinations = current_user.examinations
+    @examinations = current_user.examinations.order("created_at DESC")
   end
 
   def create
