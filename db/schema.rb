@@ -16,10 +16,11 @@ ActiveRecord::Schema.define(version: 20150403021729) do
   create_table "answers", force: :cascade do |t|
     t.integer  "question_id",    limit: 4
     t.integer  "option_id",      limit: 4
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "examination_id", limit: 4
     t.boolean  "correct",        limit: 1
+    t.string   "text_answers",   limit: 255
   end
 
   create_table "courses", force: :cascade do |t|
@@ -27,6 +28,7 @@ ActiveRecord::Schema.define(version: 20150403021729) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "time_countdown", limit: 4
+    t.boolean  "hastext",        limit: 1
   end
 
   create_table "examinations", force: :cascade do |t|

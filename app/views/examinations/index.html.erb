@@ -27,14 +27,14 @@
       <% @examinations.each do |exam| %>
         <tr>
           <td><%= exam.course.name %></td>
-          <td><%= exam.course.created_at %></td>
+          <td><%= exam.created_at %></td>
           <td>
             <%= exam.status %>&nbsp&nbsp&nbsp
             <% if exam.time_submited %>
               <%= exam.time_length exam.time_submited %>&nbsp&nbsp&nbsp
             <% end %>
             <% if exam.status == "Checked" %>
-              <%= exam.correct_answers %>/20
+              <%= exam.answers.correct_answers.count %>/20
             <% end %>
           </td>
           <td>

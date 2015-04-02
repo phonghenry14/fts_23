@@ -221,3 +221,34 @@ input {
 .my-group-button a {
   float: left;
 }
+
+.my-textarea {
+  display: inline-block;
+  width: 100%;
+}
+
+.my-textarea textarea {
+  float: left;
+}
+
+.my-textarea span {
+  margin-top: 18px;
+}
+
+textarea {
+  width: 75%
+}
+
+.area-with-checkbox {
+  width: 100%;
+  display: inline-block;
+
+  input[type = checkbox] {
+    width: 30px;
+    margin-top: 16px;
+  }
+
+  textarea {
+  float: left;
+  }
+}

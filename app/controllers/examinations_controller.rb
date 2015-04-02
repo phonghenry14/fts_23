@@ -9,6 +9,7 @@ class ExaminationsController < ApplicationController
   def create
     @examination = Examination.new examination_params
     if @examination.save
+      Examination.init_answers(@examination)
       flash[:success] = "Successfully created Examination!"
       redirect_to root_path
     else
@@ -48,6 +49,6 @@ class ExaminationsController < ApplicationController
 
   def examination_params_to_answer
     params.require(:examination).permit :id, :status, :time_submited, :time_start, :time_end,
-                    answers_attributes: [:id, :question_id, :option_id]
+                    answers_attributes: [:id, :question_id, :option_id, :text_answers]
   end
 end

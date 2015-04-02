@@ -5,29 +5,21 @@ class Examination < ActiveRecord::Base
 
   accepts_nested_attributes_for :answers, allow_destroy: true
 
-  before_create :init_answers
+  def self.check_correct_answers(examination_params, examination)
+    questions = examination.course.questions
+    answers_is_correct = Array.new
 
-  def self.check_correct_answers(examination_params_to_check, questions, id)
-    correct_answers = 0
-    answers_attributes = examination_params_to_check[:answers_attributes]
-    answers_is_correct = []
-    answers_attributes.each do |key, value|
-      questions.each do |question|
-        if(value[:question_id] == question.id.to_s)
-          question.options.each do |option|
-            if option.correct == true
-              flag = option.id.to_s
-              if(value[:option_id] == flag)
-                correct_answers = correct_answers + 1
-                answers_is_correct << value[:id].to_i
-              end
-            end
-          end
-        end
+    examination_params[:answers_attributes].each do |_, value|
+      if value[:correct] == "1"
+        answers_is_correct << value[:id].to_i
+        break
+      end
+      question = questions.find value[:question_id].to_i
+      if value[:option_id].to_i == question.options.option_correct.first.id
+        answers_is_correct << value[:id].to_i
       end
     end
-    Examination.update(id, correct_answers: correct_answers,
-                          status: examination_params_to_check[:status])
+
     return answers_is_correct
   end
 
@@ -37,10 +29,30 @@ class Examination < ActiveRecord::Base
     "#{minutes} : #{seconds}"
   end
 
-  private
-  def init_answers
-    self.course.questions.sample(20).each do |question|
-      self.answers.build question: question
+  def self.init_answers (examination)
+    if examination.course.hastext?
+      choice_questions = Array.new
+      text_questions = Array.new
+
+      examination.course.questions.each do |question|
+        if question.options.count > 0
+          choice_questions << question
+        else
+          text_questions << question
+        end
+      end
+
+      choice_questions.sample(17).each do |question|
+        Answer.create(question_id: question.id, examination_id: examination.id)
+      end
+
+      text_questions.sample(3).each do |question|
+        Answer.create(question_id: question.id, examination_id: examination.id)
+      end
+    else
+      examination.course.questions.sample(20).each do |question|
+        Answer.create(question_id: question.id, examination_id: examination.id)
+      end
     end
   end
 end
