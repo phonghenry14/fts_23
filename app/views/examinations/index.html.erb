@@ -6,7 +6,9 @@
       <%= f.collection_select :course_id, Course.all, :id, :name %>
       <%= f.hidden_field :user_id, value: current_user.id%>
       <%= f.hidden_field :status, value: "Ready" %>
-      <%= f.submit "Start New", class: "btn btn-primary" %>
+      <div id="start-new">
+        <%= f.submit "Start New", class: "btn btn-primary" %>
+      </div>
     <% end %>
   </div>
 </div>
@@ -28,6 +30,9 @@
           <td><%= exam.course.created_at %></td>
           <td>
             <%= exam.status %>&nbsp&nbsp&nbsp
+            <% if exam.time_submited %>
+              <%= exam.time_length exam.time_submited %>&nbsp&nbsp&nbsp
+            <% end %>
             <% if exam.status == "Checked" %>
               <%= exam.correct_answers %>/20
             <% end %>
@@ -36,7 +41,7 @@
             <% if exam.status == "Submited" || exam.status == "Checked" %>
               <%= link_to "View", examination_path(exam) %>
             <% else %>
-              <div id= "getting" data-time="<%= Time.zone.now() + exam.course.time_countdown %>" data-timer-exam="<%= exam.id %>">
+              <div id= "getting" data-time="<%= Time.zone.now() + exam.course.time_countdown %>" data-id-exam="<%= exam.id %>" data-exam-status="<%= exam.status %>">
                 <%= link_to "Start", examination_path(exam), class: "start" %>
               </div>
             <% end %>
@@ -47,12 +52,12 @@
   </table>
 </div>
 
-
 <script type="text/javascript">
 
   $(window).ready(function() {
-    if (localStorage.length != 0)
-      $('.start').remove();
+    var status = $("#getting").data('exam-status');
+    if (status == "Ready")
+      $('#start-new').remove();
   });
 
 </script>

@@ -30,18 +30,11 @@ function check_only_one_checkbox(checkbox) {
 }
 
 $(document).ready(function(){
-  var data_timer_exam = $("#getting-started").data('timer-exam');
-  var timer = localStorage.getItem('id_' + data_timer_exam) || 0;
-  if (timer <= $("#getting-started").data('time')) {
-    if (timer != 0) {
+  var data_id_exam = $("#getting-started").data('id-exam');
+  var timer = localStorage.getItem('id_' + data_id_exam) || 0;
+  if (timer == 0) {
     $("#getting-started").html('Full Time').parent().parent().next()
       .next().find('.btn-primary').remove();
-       localStorage.clear();
-    }
-    else {
-      $("#getting-started").html('Full Time').parent().parent().next()
-      .next().find('.btn-primary').remove();
-    }
   }
   else {
     $("#getting-started").countdown(timer, function(event) {
@@ -50,16 +43,25 @@ $(document).ready(function(){
       );
     }).on('finish.countdown', function(event) {
       $(this).html('Full Time').parent().parent().next()
-        .next().find('.btn-primary').click();
+        .next().find('.btn-primary').remove();
       localStorage.clear();
-      });
+    });
   }
 })
 
 $(function(){
   $(".start").click(function() {
     var timer2 = $("#getting").data('time');
-    var data_timer_exam = $("#getting").data('timer-exam');
-    localStorage.setItem('id_' + data_timer_exam, timer2);
+    var data_id_exam = $("#getting").data('id-exam');
+    localStorage.setItem('id_' + data_id_exam, timer2);
+
+    $.ajax({
+      url: "/examinations/" + data_id_exam,
+      type: 'PUT',
+    });
+  });
+
+  $("#start-new").click(function() {
+    localStorage.clear();
   });
 })

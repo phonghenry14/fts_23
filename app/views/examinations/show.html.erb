@@ -2,7 +2,8 @@
   <span><%= @examination.created_at %></span>
   <div style="float: right;position:fixed;top:55px;right:200px;">
     Time left:
-    <span id="getting-started" data-time="<%= Time.zone.now() %>" data-timer-exam="<%= @examination.id %>"></span>
+    <span id="getting-started" data-id-exam="<%= @examination.id %>" data-time="<%= Time.zone.now() %>">
+    </span>
   </div>
 </div>
 <h2><%= @examination.course.name %></h2>
@@ -24,9 +25,10 @@
 </div>
 
 <script type="text/javascript">
-  var data_timer_exam = $("#getting-started").data('timer-exam');
-  var timer = localStorage.getItem('id_' + data_timer_exam);
-  if (timer >= $("#getting-started").data('time') ) {
+  var data_id_exam = $("#getting-started").data('id-exam');
+  var timer = $("#getting-started").data('time');
+  var timer = localStorage.getItem('id_' + data_id_exam) || 0;
+  if ((timer != 0) && (timer.to_i >= timer2.to_i)) {
     $(window).load(function(event) {
       var a=confirm('You want to submit?');
         if (a==true)
