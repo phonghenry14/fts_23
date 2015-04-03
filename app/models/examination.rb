@@ -31,6 +31,12 @@ class Examination < ActiveRecord::Base
     return answers_is_correct
   end
 
+  def time_length seconds
+    minutes = (seconds / 1.minute).floor
+    seconds -= minutes.minutes
+    "#{minutes} : #{seconds}"
+  end
+
   private
   def init_answers
     self.course.questions.sample(20).each do |question|

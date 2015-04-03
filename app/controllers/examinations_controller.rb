@@ -23,22 +23,31 @@ class ExaminationsController < ApplicationController
 
   def update
     @examination = Examination.find params[:id]
-    if @examination.update_attributes examination_params_to_answer
-      flash[:success] = "Successfully summited!"
-      redirect_to root_path
+    if (@examination.status == "Ready")
+      @examination.status = "Submited"
+      @examination.time_start = Time.zone.now()
+      @examination.save
     else
-      flash[:danger] = "Found Error!"
-      render :show
+      @examination.time_end = Time.zone.now()
+      @examination.time_submited = @examination.time_end - @examination.time_start
+      if @examination.update_attributes examination_params_to_answer
+        flash[:success] = "Successfully summited!"
+        redirect_to root_path
+      else
+        flash[:danger] = "Found Error!"
+        render :show
+      end
     end
+
   end
 
   private
   def examination_params
-    params.require(:examination).permit :id, :user_id, :course_id, :status
+    params.require(:examination).permit :id, :user_id, :course_id, :status, :time_submited
   end
 
   def examination_params_to_answer
-    params.require(:examination).permit :id, :status,
+    params.require(:examination).permit :id, :status, :time_submited, :time_start, :time_end,
                     answers_attributes: [:id, :question_id, :option_id]
   end
 end
