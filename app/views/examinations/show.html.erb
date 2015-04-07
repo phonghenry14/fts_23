@@ -26,9 +26,9 @@
 
 <script type="text/javascript">
   var data_id_exam = $("#getting-started").data('id-exam');
-  var timer = $("#getting-started").data('time');
+  var timer2 = $("#getting-started").data('time');
   var timer = localStorage.getItem('id_' + data_id_exam) || 0;
-  if ((timer != 0) && (timer.to_i >= timer2.to_i)) {
+  if ((timer != 0) && (timer > timer2)) {
     $(window).load(function(event) {
       var a=confirm('You want to submit?');
         if (a==true)
