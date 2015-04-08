@@ -10,4 +10,5 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.precompile += %w( jquery.countdown.min.js )
-Rails.application.config.assets.precompile += %w( jquery.countdown.js)
+Rails.application.config.assets.precompile += %w( show_examination.js.coffee)
+Rails.application.config.assets.precompile += %w( index_examination.js.coffee)
