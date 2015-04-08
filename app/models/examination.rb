@@ -55,4 +55,28 @@ class Examination < ActiveRecord::Base
       end
     end
   end
+
+  def to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << [self.course.name]
+      csv << ["Question content", "option1", "option2", "option3", "option4", "your answer", "true/fail"]
+      self.answers.each do |answer|
+        q = answer.question.options.map(&:content)
+        answer_selected = 1
+        answer.question.options.each do |o|
+          if answer.option_id == o.id
+            break
+          else
+            answer_selected = answer_selected +1
+          end
+        end
+        if answer_selected > 4
+          answer_selected = 0
+        end
+        data = [answer.question.content] + q + [answer_selected] + [answer.correct]
+        csv << data
+      end
+    end
+  end
+
 end

@@ -6,7 +6,7 @@
       <%= h @course.name %>
     </ul>
     <div style="text-align: center; margin-left: 40px">
-      <%= link_to " ", edit_admin_course_path, class: "glyphicon glyphicon-edit" %> 
+      <%= link_to " ", edit_admin_course_path, class: "glyphicon glyphicon-edit" %>
       <%= link_to " ", admin_course_path(@course),
           method: :delete, data: {confirm: "You sure?"}, class: "glyphicon glyphicon-trash" %>
     </div>
