@@ -32,13 +32,12 @@ ActiveRecord::Schema.define(version: 20150403021729) do
   end
 
   create_table "examinations", force: :cascade do |t|
-    t.integer  "user_id",         limit: 4
-    t.integer  "course_id",       limit: 4
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.string   "status",          limit: 255
-    t.integer  "correct_answers", limit: 4
-    t.integer  "time_submited",   limit: 4
+    t.integer  "user_id",       limit: 4
+    t.integer  "course_id",     limit: 4
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "status",        limit: 255
+    t.integer  "time_submited", limit: 4
     t.datetime "time_start"
     t.datetime "time_end"
   end
