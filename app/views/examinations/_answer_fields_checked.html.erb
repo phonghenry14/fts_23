@@ -4,24 +4,32 @@
     <%= f.hidden_field :question_id, value: f.object.question.id %>
     <%= f.object.question.content %>
   </span><br \>
-  <% f.object.question.options.each do |option| %>
-    <% if f.object.correct == true && f.object.option_id == option.id %>
-      <span class="options-sheet">
-        <%= f.radio_button :option_id, option.id %>
-        <p><%= option.content %><span class= "glyphicon glyphicon-ok" ></span></li></p>
-      </span>
-    <% elsif f.object.correct != true && f.object.option_id == option.id %>
-      <span class="options-sheet" style="color:red">
-        <%= f.radio_button :option_id, option.id %>
-        <p><%= option.content %></p>
-      </span>
-    <% else %>
-      <span class="options-sheet">
-        <%= f.radio_button :option_id, option.id %>
-        <p><%= option.content %></p>
-      </span>
+  <% if f.object.question.options.count == 0 && f.object.correct == true %>
+    <p class="my-textarea">
+      <%= f.text_area :text_answers, rows: 2 %>
+      <span class= "glyphicon glyphicon-ok" ></span>
+    </p>
+  <% elsif f.object.question.options.count == 0 %>
+    <%= f.text_area :text_answers, rows: 2 %>
+  <% else %>
+    <% f.object.question.options.each do |option| %>
+      <% if f.object.correct == true && f.object.option_id == option.id %>
+        <span class="options-sheet">
+          <%= f.radio_button :option_id, option.id %>
+          <p><%= option.content %><span class= "glyphicon glyphicon-ok" ></span></p>
+        </span>
+      <% elsif f.object.correct != true && f.object.option_id == option.id %>
+        <span class="options-sheet" style="color:red">
+          <%= f.radio_button :option_id, option.id %>
+          <p><%= option.content %></p>
+        </span>
+      <% else %>
+        <span class="options-sheet">
+          <%= f.radio_button :option_id, option.id %>
+          <p><%= option.content %></p>
+        </span>
+      <% end %>
     <% end %>
-
   <% end %>
 </div>
 

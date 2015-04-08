@@ -21,11 +21,11 @@
            </td>
           <td><%= exam.course.name %></td>
           <td><%= exam.user.name %></td>
-          <td><%= exam.course.created_at %></td>
+          <td><%= exam.created_at %></td>
           <td>
             <%= exam.status %>&nbsp&nbsp&nbsp
             <% if exam.status == "Checked" %>
-              <%= exam.correct_answers %>/20
+              <%= exam.answers.correct_answers.count %>/20
             <% end %>
           </td>
           <td>

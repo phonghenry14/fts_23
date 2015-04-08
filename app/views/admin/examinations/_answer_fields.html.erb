@@ -4,10 +4,17 @@
     <%= f.hidden_field :question_id, value: f.object.question.id %>
     <%= f.object.question.content %>
   </span><br \>
-  <% f.object.question.options.each do |option| %>
-    <span class="options-sheet">
-      <%= f.radio_button :option_id, option.id %>
-      <p><%= option.content %></p>
-    </span>
+  <% if f.object.question.options.count == 0 %>
+    <div class="area-with-checkbox">
+      <%= f.text_area :text_answers, rows: 2 %>
+      <%= f.check_box :correct %>
+    </div>
+  <% else %>
+    <% f.object.question.options.each do |option| %>
+      <span class="options-sheet">
+        <%= f.radio_button :option_id, option.id %>
+        <p><%= option.content %></p>
+      </span>
+    <% end %>
   <% end %>
 </div>

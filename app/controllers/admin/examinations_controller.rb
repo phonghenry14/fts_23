@@ -2,7 +2,7 @@ class Admin::ExaminationsController < ApplicationController
   before_action :admin_user
 
   def index
-    @examinations = Examination.all
+    @examinations = Examination.all.order("created_at DESC")
   end
 
   def show
@@ -11,14 +11,15 @@ class Admin::ExaminationsController < ApplicationController
 
   def update
     @examination = Examination.find params[:id]
-    questions = @examination.course.questions
-    answers_is_correct = Examination.check_correct_answers(examination_params_to_check,
-                                      questions, params[:id])
+    answers_is_correct = Examination.check_correct_answers(examination_params,
+                                                          @examination)
     answers_is_correct.each do |n|
       Answer.update(n, correct: true)
     end
-    flash[:success] = "Successfully checked!"
-    redirect_to root_path
+    if @examination.update_attributes examination_params
+      flash[:success] = "Successfully checked!"
+      redirect_to root_path
+    end
   end
 
   def destroy
@@ -28,8 +29,8 @@ class Admin::ExaminationsController < ApplicationController
   end
 
   private
-  def examination_params_to_check
+  def examination_params
     params.require(:examination).permit :id, :status,
-                    answers_attributes: [:id, :question_id, :option_id]
+                    answers_attributes: [:id, :question_id, :option_id, :correct]
   end
 end
