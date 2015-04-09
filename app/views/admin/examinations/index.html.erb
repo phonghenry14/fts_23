@@ -1,42 +1,28 @@
 <h1>All examinations</h1>
-<div class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th></th>
-        <th style="width: 150px">Name</th>
-        <th style="width: 250px">User name</th>
-        <th style="width: 300px">Datetime</th>
-        <th style="width: 300px">Status</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @examinations.each do |exam| %>
-        <tr>
-          <td>
-            <%= link_to "", admin_examination_path(exam),
-                      method: :delete, data: {confirm: "Are you sure?"},
-                      class: "glyphicon glyphicon-trash" %>
-           </td>
-          <td><%= exam.course.name %></td>
-          <td><%= exam.user.name %></td>
-          <td><%= exam.created_at %></td>
-          <td>
-            <%= exam.status %>&nbsp&nbsp&nbsp
-            <% if exam.status == "Checked" %>
-              <%= exam.answers.correct_answers.count %>/20
-            <% end %>
-          </td>
-          <td>
-            <% if exam.status == "Checked" %>
-              <%= link_to "View", admin_examination_path(exam) %>
-            <% elsif exam.status == "Submited" %>
-              <%= link_to "Check", admin_examination_path(exam) %>
-            <% end %>
-          </td>
-        </tr>
+<div class="my-search">
+  <%= form_tag admin_examinations_path, method: :get, id: "my-search" do %>
+    <%= label_tag :Search_user %>
+    <%= text_field_tag :search, params[:search],
+                        class: "my-search-field" %>
+    <%= link_to "", "#", onclick: "$('#my-search').submit()",
+                        class: "glyphicon glyphicon-search" %>
+  <% end %>
+</div>
+<div class="my-divTable">
+  <div class="headRow">
+    <div class="divCell">Modified</div>
+    <div id="my-select-course" class="divCell" style="height: 20px">
+      <%= form_tag admin_examinations_path, method: :get do %>
+        <%= select_tag "courses", options_from_collection_for_select(@courses,
+               "id", "name"), prompt: "All courses" %>
       <% end %>
-    </tbody>
-  </table>
+    </div>
+    <div class="divCell">User name</div>
+    <div class="divCell">Datetime</div>
+    <div class="divCell">Status</div>
+    <div class="divCell">Action</div>
+  </div>
+  <div id="my-all-examinations" class="divRow">
+    <%= render 'examination' %>
+  </div>
 </div>

@@ -1,22 +1,35 @@
 class Examination < ActiveRecord::Base
+  include Filterable
+
   belongs_to :user
   belongs_to :course
   has_many :answers, dependent: :destroy
 
   accepts_nested_attributes_for :answers, allow_destroy: true
 
+  scope :courses, ->(courses){where course_id: courses}
+
+  def self.search(search)
+    if search
+      select('examinations.*').joins(:user).where('users.name LIKE ?',
+                      "%#{search}%").order("examinations.created_at DESC")
+    else
+      self.all.order("created_at DESC")
+    end
+  end
+
   def self.check_correct_answers(examination_params, examination)
-    questions = examination.course.questions
     answers_is_correct = Array.new
 
     examination_params[:answers_attributes].each do |_, value|
-      if value[:correct] == "1"
-        answers_is_correct << value[:id].to_i
-        break
-      end
-      question = questions.find value[:question_id].to_i
-      if value[:option_id].to_i == question.options.option_correct.first.id
-        answers_is_correct << value[:id].to_i
+      answers_is_correct << value[:id].to_i if value[:correct] == "1"
+    end
+
+    examination.answers.each do |answer|
+      break if answer.option_id == nil
+      question = Question.find answer.question_id
+      if answer.option_id == question.options.option_correct.first.id
+        answers_is_correct << answer.id
       end
     end
 

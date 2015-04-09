@@ -1,0 +1,22 @@
+<tr>
+  <td><%= examination.course.name %></td>
+  <td><%= examination.created_at %></td>
+  <td>
+    <%= examination.status %>&nbsp&nbsp&nbsp
+    <% if examination.time_submited %>
+      <%= examination.time_length examination.time_submited %>&nbsp&nbsp&nbsp
+    <% end %>
+    <% if examination.status == "Checked" %>
+      <%= examination.answers.correct_answers.count %>/20
+    <% end %>
+  </td>
+  <td>
+    <% if examination.status == "Submited" || examination.status == "Checked" %>
+      <%= link_to "View", examination_path(examination) %>
+    <% else %>
+      <div id= "getting" data-time="<%= Time.zone.now() + examination.course.time_countdown %>" data-id-exam="<%= examination.id %>" data-exam-status="<%= examination.status %>">
+        <%= link_to "Start", examination_path(examination), class: "start" %>
+      </div>
+    <% end %>
+  </td>
+</tr>

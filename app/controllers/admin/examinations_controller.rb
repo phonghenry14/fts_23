@@ -2,7 +2,14 @@ class Admin::ExaminationsController < ApplicationController
   before_action :admin_user
 
   def index
-    @examinations = Examination.all.order("created_at DESC")
+    @courses = Course.all
+    @examinations = Examination.filter params.slice :courses
+    @examinations = @examinations.search params[:search]
+    @examinations = @examinations.paginate page: params[:page], per_page: 8
+    respond_to do |format|
+      format.html {}
+      format.js {}
+    end
   end
 
   def show
@@ -11,8 +18,7 @@ class Admin::ExaminationsController < ApplicationController
 
   def update
     @examination = Examination.find params[:id]
-    answers_is_correct = Examination.check_correct_answers(examination_params,
-                                                          @examination)
+    answers_is_correct = Examination.check_correct_answers(examination_params, @examination)
     answers_is_correct.each do |n|
       Answer.update(n, correct: true)
     end
@@ -31,6 +37,6 @@ class Admin::ExaminationsController < ApplicationController
   private
   def examination_params
     params.require(:examination).permit :id, :status,
-                    answers_attributes: [:id, :question_id, :option_id, :correct]
+                    answers_attributes: [:id, :correct]
   end
 end

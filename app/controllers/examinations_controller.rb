@@ -3,7 +3,8 @@ class ExaminationsController < ApplicationController
 
   def index
     @examination = Examination.new
-    @examinations = current_user.examinations.order("created_at DESC")
+    @examinations = current_user.examinations.order "created_at DESC"
+    @examinations = @examinations.paginate page: params[:page], per_page: 8
   end
 
   def create
@@ -12,7 +13,7 @@ class ExaminationsController < ApplicationController
     else
       @examination = Examination.new examination_params
       if @examination.save
-        Examination.init_answers(@examination)
+        Examination.init_answers @examination
         flash[:success] = "Successfully created Examination!"
         redirect_to root_path
       else
