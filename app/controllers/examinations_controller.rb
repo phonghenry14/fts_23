@@ -7,14 +7,18 @@ class ExaminationsController < ApplicationController
   end
 
   def create
-    @examination = Examination.new examination_params
-    if @examination.save
-      Examination.init_answers(@examination)
-      flash[:success] = "Successfully created Examination!"
+    if Examination.last.status == "Ready"
       redirect_to root_path
     else
-      flash[:notice] = "Found Error!"
-      redirect_to root_path
+      @examination = Examination.new examination_params
+      if @examination.save
+        Examination.init_answers(@examination)
+        flash[:success] = "Successfully created Examination!"
+        redirect_to root_path
+      else
+        flash[:notice] = "Found Error!"
+        redirect_to root_path
+      end
     end
   end
 
