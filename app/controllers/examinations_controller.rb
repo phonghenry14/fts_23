@@ -20,6 +20,10 @@ class ExaminationsController < ApplicationController
 
   def show
     @examination = Examination.find params[:id]
+    respond_to do |format|
+      format.html
+      format.csv {send_data @examination.to_csv}
+    end
   end
 
   def update
