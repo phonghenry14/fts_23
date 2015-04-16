@@ -7,9 +7,7 @@ class ExaminationsController < ApplicationController
   end
 
   def create
-    if Examination.last.status == "Ready"
-      redirect_to root_path
-    else
+    if current_user.examinations.count == 0
       @examination = Examination.new examination_params
       if @examination.save
         Examination.init_answers(@examination)
@@ -19,14 +17,40 @@ class ExaminationsController < ApplicationController
         flash[:notice] = "Found Error!"
         redirect_to root_path
       end
+    else
+      if current_user.examinations.last.status == "Ready"
+        redirect_to root_path
+      else
+        @examination = Examination.new examination_params
+        if @examination.save
+          Examination.init_answers(@examination)
+          flash[:success] = "Successfully created Examination!"
+          redirect_to root_path
+        else
+          flash[:notice] = "Found Error!"
+          redirect_to root_path
+        end
+      end
     end
   end
 
   def show
     @examination = Examination.find params[:id]
-    respond_to do |format|
-      format.html
-      format.csv {send_data @examination.to_csv}
+    if (Time.zone.now() - @examination.time_start) > @examination.course.time_countdown
+      respond_to do |format|
+        format.html
+        format.csv {send_data @examination.to_csv}
+      end
+    else
+      if @examination.current_session_id != session[:session_id]
+        flash[:danger] = "User is testing!"
+        redirect_to root_path
+      else
+        respond_to do |format|
+          format.html
+          format.csv {send_data @examination.to_csv}
+        end
+      end
     end
   end
 
@@ -35,6 +59,7 @@ class ExaminationsController < ApplicationController
     if (@examination.status == "Ready")
       @examination.status = "Submited"
       @examination.time_start = Time.zone.now()
+      @examination.current_session_id = session[:session_id]
       @examination.save
     else
       @examination.time_end = Time.zone.now()
