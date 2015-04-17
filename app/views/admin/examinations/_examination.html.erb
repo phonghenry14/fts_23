@@ -1,0 +1,24 @@
+<% @examinations.each do |examination| %>
+  <div class="divCell">
+    <%= link_to "", admin_examination_path(examination),
+              method: :delete, data: {confirm: "Are you sure?"},
+              class: "glyphicon glyphicon-trash" %>
+  </div>
+  <div class="divCell"><%= examination.course.name %></div>
+  <div class="divCell"><%= examination.user.name %></div>
+  <div class="divCell"><%= examination.created_at.strftime("%d/%m/%Y %H:%M") %></div>
+  <div class="divCell">
+    <%= examination.status %>&nbsp&nbsp&nbsp
+    <% if examination.status == "Checked" %>
+      <%= examination.answers.correct_answers.count %>/20
+    <% end %>
+  </div>
+  <div class="divCell">
+    <% if examination.status == "Checked" %>
+      <%= link_to "View", admin_examination_path(examination) %>
+    <% elsif examination.status == "Submited" %>
+      <%= link_to "Check", admin_examination_path(examination) %>
+    <% end %>
+  </div>
+<% end %>
+<%= will_paginate @examinations %>

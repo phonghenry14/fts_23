@@ -252,3 +252,65 @@ textarea {
   float: left;
   }
 }
+
+.my-search-field {
+  width: 180px;
+  margin-left: 2px;
+}
+
+.my-search input{
+  border-radius: 3px;
+}
+
+.my-search {
+  margin-left: 36px;
+  a {
+    text-decoration: none;
+  }
+}
+
+.my-select-course {
+  height: 20px;
+  width: 100px;
+  margin-left: -4px;
+}
+
+.my-select-course select {
+  border-radius: 4px;
+  cursor: pointer;
+  background: white;
+}
+
+.my-divTable {
+  display: table;
+  width: auto;
+  background-color: #eee;
+  border-spacing: 5px;/*cellspacing:poor IE support for  this*/
+ /* border-collapse: separate;*/
+}
+
+.divRow {
+  display: table-row;
+  width: auto;
+  clear:both;
+}
+
+.divCell {
+  float: left;/*fix for  buggy browsers*/
+  display: table-column;
+  width: 180px;
+  background-color: #D0D0D0 ;
+}
+
+.my-remember-me {
+  display: inline-block;
+  width: 100%;
+
+  .remember-checkbox {
+    width: 30px;
+  }
+
+  .remember-label {
+  float: left;
+  }
+}

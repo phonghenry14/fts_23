@@ -17,39 +17,17 @@
   <table class="table">
     <thead>
       <tr>
-        <th style="width: 150px">Name</th>
-        <th style="width: 200px">Created at</th>
-        <th>Status</th>
+        <th style="width: 20%">Course</th>
+        <th style="width: 30%">Datetime</th>
+        <th style="width: 30%">Status</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-      <% @examinations.each do |exam| %>
-        <tr>
-          <td><%= exam.course.name %></td>
-          <td><%= exam.created_at %></td>
-          <td>
-            <%= exam.status %>&nbsp&nbsp&nbsp
-            <% if exam.time_submited %>
-              <%= exam.time_length exam.time_submited %>&nbsp&nbsp&nbsp
-            <% end %>
-            <% if exam.status == "Checked" %>
-              <%= exam.answers.correct_answers.count %>/20
-            <% end %>
-          </td>
-          <td>
-            <% if exam.status == "Submited" || exam.status == "Checked" %>
-              <%= link_to "View", examination_path(exam) %>
-            <% else %>
-              <div id= "getting" data-time="<%= Time.zone.now() + exam.course.time_countdown %>" data-id-exam="<%= exam.id %>" data-exam-status="<%= exam.status %>">
-                <%= link_to "Start", examination_path(exam), class: "start" %>
-              </div>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
+      <%= render @examinations %>
     </tbody>
   </table>
+  <%= will_paginate @examinations, style: "margin: 0 0 0 410px" %>
 </div>
 
 <%= javascript_include_tag :index_examination %>
