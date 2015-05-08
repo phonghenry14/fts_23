@@ -1,20 +1,31 @@
 <% provide(:title, 'All User') %>
-<h1>All courses</h1>
-<%= will_paginate %>
-<div class="table-responsive">
-  <table class="table">
-    <thead>
+<%= search_form_for [:admin, @search], method: :get do |f| %>
+  <div class="my-search-field">
+    <%= f.label :name_cont, "Name" %>
+    <%= f.text_field :name_cont %>
+    <%= f.submit "Search" %>
+  </div>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= "Avatar" %></th>
+      <th><%= "Name" %></th>
+      <th><%= "Email" %></th>
+      <th><%= "Create_at" %></th>
+      <th><%= "Role" %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
       <tr>
-        <th>Avatar</th>
-        <th>Name</th>
-        <th>Role</th>
-        <th>Created at</th>
-        <th>Modified</th>
+        <td><%= gravatar_for user, size: 30 %></td>
+        <td><%= link_to(user.name, user) %></td>
+        <td><%= user.email %></td>
+        <td><%= user.created_at%></td>
+        <td><%= user.role%></td>
       </tr>
-    </thead>
-    <tbody>
-      <%= render @users %>
-    </tbody>
-  </table>
-</div>
-<%= will_paginate %>
+    <% end %>
+  </tbody>
+</table>

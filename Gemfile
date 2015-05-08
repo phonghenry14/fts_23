@@ -12,6 +12,7 @@ gem 'bootstrap-will_paginate', '0.0.10'
 gem 'jquery-turbolinks'
 gem 'cancancan'
 gem 'delayed_job_active_record'
+gem 'ransack'
 # Use mysql as the database for Active Record
 gem 'mysql2'
 # Use SCSS for stylesheets
