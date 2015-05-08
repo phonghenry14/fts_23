@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  load_and_authorize_resource except: [:home, :help, :about, :contact]
+  load_and_authorize_resource except: [:home, :help, :about, :contact, :new, :create]
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, alert: exception.message
