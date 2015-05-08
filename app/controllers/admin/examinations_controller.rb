@@ -23,6 +23,7 @@ class Admin::ExaminationsController < ApplicationController
       Answer.update(n, correct: true)
     end
     if @examination.update_attributes examination_params
+      UserMailer.delay.examination_checked(@examination, @examination.user)
       flash[:success] = "Successfully checked!"
       redirect_to root_path
     end
