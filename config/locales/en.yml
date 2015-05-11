@@ -20,4 +20,16 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  layouts:
+    home: "Home"
+    help: "Help"
+    user: "User"
+    course: "Course"
+    profile: "Profile"
+    edit_profile: "Edit Profile"
+    logout: "Log out"
+  devise:
+    sessions:
+      user:
+        signed_in: "Logged in successfully!"
+

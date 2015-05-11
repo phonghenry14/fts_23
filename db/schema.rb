@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150424075138) do
+ActiveRecord::Schema.define(version: 20150511021324) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "question_id",    limit: 4
@@ -89,6 +89,8 @@ ActiveRecord::Schema.define(version: 20150424075138) do
     t.string   "current_sign_in_ip",     limit: 255
     t.string   "last_sign_in_ip",        limit: 255
     t.string   "name",                   limit: 255
+    t.string   "language",               limit: 255
+    t.string   "string",                 limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
