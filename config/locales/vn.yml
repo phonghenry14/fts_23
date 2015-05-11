@@ -1,0 +1,13 @@
+vn:
+  layouts:
+    home: "Trang chu"
+    help: "Giup do"
+    user: "Nguoi dung"
+    course: "Course"
+    profile: "Du lieu ca nhan"
+    edit_profile: "Sua du lieu"
+    logout: "Thoat"
+  devise:
+    sessions:
+      user:
+        signed_in: "Dang nhap thanh cong!"

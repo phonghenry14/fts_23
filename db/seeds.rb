@@ -1,5 +1,5 @@
-User.create email: "phong@abc.com", name: "phong", role: "admin", password: "12345678"
-User.create email: "phuong@abc.com", name: "phuong", role: "admin", password: "12345678"
+User.create email: "phong@abc.com", name: "phong", role: "admin", password: "12345678", language: "en"
+User.create email: "phuong@abc.com", name: "phuong", role: "admin", password: "12345678", language: "en"
 
 time_countdown = 600
 
