@@ -13,6 +13,7 @@ gem 'jquery-turbolinks'
 gem 'cancancan'
 gem 'delayed_job_active_record'
 gem 'ransack'
+
 # Use mysql as the database for Active Record
 gem 'mysql2'
 # Use SCSS for stylesheets
@@ -51,5 +52,8 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-end
 
+  gem 'rspec-rails', '~> 3.0'
+
+  gem 'factory_girl_rails'
+end
