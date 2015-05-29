@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory :option do
-    question_id "1"
+    question
     content "phong"
-    correct "true"
   end
 end

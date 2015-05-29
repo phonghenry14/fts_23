@@ -5,6 +5,7 @@ FactoryGirl.define do
       "phong#{n}@gmail.com"
     end
     password "nhiepphong"
+    password_confirmation "nhiepphong"
     role "admin"
   end
 end
