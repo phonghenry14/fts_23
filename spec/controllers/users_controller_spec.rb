@@ -1,10 +1,15 @@
 require "rails_helper"
 
-RSpec.describe Admin::UsersController, type: :controller do
-  describe "GET #index" do
-    it "renders the index template" do
-      get :index
-      expect(response).to be_success
+RSpec.describe UsersController, type: :controller do
+  before :each do
+    @user = FactoryGirl.create :user, role: "admin"
+    sign_in @user
+  end
+
+  describe "GET #show" do
+    it "should response to display user information" do
+      get :show, id: @user.id
+      expect(response).to render_template "show"
     end
   end
 end
